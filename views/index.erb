@@ -1,7 +1,8 @@
 <h1> Here are your recipes: </h1>
 <ul>
-  <% @recipes.each do |recipe|  %>
-    <li><%= recipe.name %> <%= recipe.time %></li>
+  <% @recipes.each_with_index do |recipe, index|  %>
+    <li>
+    <%= recipe.name %> (<%= recipe.time %>) - <a href="/recipes/<%= index %>">Delete</a></li>
   <% end %>
 </ul>
 
