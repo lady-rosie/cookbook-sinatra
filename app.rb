@@ -7,6 +7,22 @@ configure :development do
   BetterErrors.application_root = File.expand_path('..', __FILE__)
 end
 
+require_relative "cookbook"
+require_relative "recipe"
+
 get '/' do
-  'Hello world!'
+  cookbook = Cookbook.new(File.join(__dir__, 'recipe.csv'))
+  @recipes = cookbook.all
+  erb :index
+end
+
+get '/new' do
+  erb :new
+end
+
+post '/recipe' do
+  cookbook = Cookbook.new(File.join(__dir__, 'recipe.csv'))
+  recipe = Recipe.new(params[:name], params[:description], params[:time], params[:level])
+  cookbook.add_recipe(recipe)
+  redirect to '/'
 end
